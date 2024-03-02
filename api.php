@@ -1,16 +1,16 @@
 <?php
 
-$type = $_GET["type"];
+$root = $_GET["root"];
 $client = $_GET["client"];
 $name = $_GET["name"];
-$return = $_GET["return"];
+$type = $_GET["type"];
 
-if (!file_exists("./res/{$type}")) {
+if (!file_exists("./res/{$root}")) {
     http_response_code(400);
     die("Invalid type.");
 }
 
-if (!file_exists("./res/{$type}/{$name}")) {
+if (!file_exists("./res/{$root}/{$name}")) {
     http_response_code(404);
     die("Resource not found.");
 }
@@ -20,7 +20,7 @@ if ($client != "pc" && $client != "mobile") {
     die("Invalid client type.");
 }
 
-$json_file = "./res/{$type}/{$name}/{$client}.json";
+$json_file = "./res/{$root}/{$name}/{$client}.json";
 
 if (!file_exists($json_file)) {
     http_response_code(404);
@@ -32,7 +32,7 @@ $json = json_decode($json_context, true);
 
 $url = $json[array_rand($json)];
 
-switch ($return) {
+switch ($type) {
     case "json": {
         header('Content-type: application/json');
         die(json_encode(['url' => $url]));
