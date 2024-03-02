@@ -30,7 +30,7 @@ if (!file_exists($json_file)) {
 $json_context = file_get_contents($json_file);
 $json = json_decode($json_context, true);
 
-$url = array_rand($json);
+$url = $json[array_rand($json)];
 
 switch ($return) {
     case "json": {
